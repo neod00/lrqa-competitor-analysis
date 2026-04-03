@@ -5,21 +5,21 @@ from urllib.parse import quote
 import yaml
 
 class NewsCrawler:
-    def __init__(self, days_ago=7):
-        # 수집할 기간 설정 (기본값: 최근 7일)
+    def __init__(self, days_ago=30):
+        # 수집할 기간 기본값: 최근 30일로 확장
         self.days_ago = days_ago
         with open("config.yaml", "r", encoding="utf-8") as f:
             self.competitors = yaml.safe_load(f)["crawling"]["competitors"]
 
     def fetch_latest_news(self):
         crawled_data = {}
-        # 현재 기준 며칠 전의 날짜 계산 (새벽 시간대 고려)
         cutoff_date = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=self.days_ago)
 
         for key, name in self.competitors.items():
-            print(f"[{name}] 뉴스 검색 중...")
-            # 검색어: 경쟁사명 + 마케팅/비즈니스 관련 핵심 키워드
-            query = f'"{name}" (인증 OR 심사 OR 세미나 OR 웨비나 OR 협약 OR MOU OR 교육)'
+            print(f"[{name}] 구글 뉴스 검색 중...")
+            
+            # 검색 조건 완화: 괄호와 따옴표를 빼서 더 유연하게 탐색
+            query = f'{name} 인증 OR 세미나 OR 협약 OR 심사'
             url = f"https://news.google.com/rss/search?q={quote(query)}&hl=ko&gl=KR&ceid=KR:ko"
             
             try:
@@ -30,26 +30,31 @@ class NewsCrawler:
                 news_list = []
                 for item in items:
                     pub_date_str = item.pubDate.text
-                    
-                    # RSS 날짜 변환 (예: Thu, 04 Apr 2026 07:00:00 GMT)
                     try:
                         pub_date = datetime.datetime.strptime(pub_date_str, "%a, %d %b %Y %H:%M:%S %Z")
-                        pub_date = pub_date.replace(tzinfo=datetime.timezone.utc) # UTC 지정
+                        pub_date = pub_date.replace(tzinfo=datetime.timezone.utc)
                     except ValueError:
                         continue
                         
-                    # 지정한 최근 N일 이내의 기사만 필터링
                     if pub_date >= cutoff_date:
+                        # ' - Google 검색' 같은 의미 없는 꼬리표 타이틀에서 제거
+                        clean_title = item.title.text.replace(' - Google 검색', '')
                         news_list.append({
-                            "title": item.title.text,
+                            "title": clean_title,
                             "date": pub_date.strftime("%Y-%m-%d"),
                             "link": item.link.text
                         })
                 
                 if news_list:
-                    # 상위 5개 기사까지만 AI에 전달하여 토큰 낭비 방지
-                    crawled_data[name] = news_list[:5] 
-                    
+                    # 중복 뉴스가 검색되는 것을 방지
+                    unique_news = []
+                    seen_titles = set()
+                    for n in news_list:
+                        if n['title'] not in seen_titles:
+                            seen_titles.add(n['title'])
+                            unique_news.append(n)
+                            
+                    crawled_data[name] = unique_news[:5] 
             except Exception as e:
                 print(f"[{name}] 크롤링 실패: {e}")
         
