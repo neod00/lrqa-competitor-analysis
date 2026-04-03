@@ -1,0 +1,21 @@
+crawling:
+  competitors:
+    dnv: "DNV"
+    bsi: "BSI"
+    sgs: "SGS"
+    bv: "BV"
+    tuvsud: "TÜV SÜD"
+    ksa: "KSA"
+    kfq: "KFQ"
+    kmar: "KMAR"
+    kpcqa: "KPCQA"
+
+ai:
+  model: "gpt-4o"
+  temperature: 0.3
+
+email:
+  smtp_server: "smtp.gmail.com"
+  smtp_port: 587
+  use_tls: true
+  subject_prefix: "[LRQA 경쟁사 분석]"
