@@ -5,3 +5,4 @@ openai
 PyYAML
 python-dotenv
 schedule
+lxml
