@@ -4,6 +4,8 @@ import datetime
 from urllib.parse import quote
 import yaml
 import email.utils
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class NewsCrawler:
     def __init__(self, days_ago=30):
@@ -29,8 +31,8 @@ class NewsCrawler:
             url = f"https://news.google.com/rss/search?q={quote(query)}&hl=ko&gl=KR&ceid=KR:ko"
             
             try:
-                # 위장한 header 씌워서 요청 보내기
-                response = requests.get(url, headers=headers, timeout=10)
+                # 위장한 header 씌워서 요청 보내기, SSL 인증 에러 우회
+                response = requests.get(url, headers=headers, timeout=10, verify=False)
                 if response.status_code != 200:
                     print(f"[{name}] 구글 뉴스 접속 실패 (상태 코드 막힘: {response.status_code})")
                     continue
