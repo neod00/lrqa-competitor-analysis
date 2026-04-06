@@ -6,3 +6,4 @@ PyYAML
 python-dotenv
 schedule
 lxml
+jinja2
