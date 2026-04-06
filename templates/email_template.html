@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .header {
+            background-color: #0033a0; /* LRQA Blue */
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .content {
+            padding: 24px;
+        }
+        h2 {
+            font-size: 16px;
+            color: #0033a0;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 8px;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #555555;
+        }
+        td {
+            color: #444444;
+            vertical-align: top;
+        }
+        .insights {
+            background-color: #f0f4f8;
+            padding: 16px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .insights ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .insights li {
+            margin-bottom: 8px;
+        }
+        .footer {
+            text-align: center;
+            padding: 24px;
+            background-color: #fafafa;
+            border-top: 1px solid #eeeeee;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #0033a0;
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .empty-state {
+            text-align: center;
+            color: #777777;
+            padding: 10px;
+            font-style: italic;
+        }
+        @media only screen and (max-width: 600px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+            th, td {
+                padding: 10px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>[LRQA] 경쟁사 마케팅 활동 일일 분석</h1>
+        </div>
+        
+        <div class="content">
+            <p style="font-size: 14px; color: #555;">본 보고서는 지정된 기관들의 최근 마케팅 활동 및 비즈니스 동향을 AI가 요약 분석한 결과입니다.</p>
+            
+            <h2>1. 글로벌 경쟁사 주요 활동 요약</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th width="25%">경쟁사</th>
+                        <th width="30%">활동 유형</th>
+                        <th width="45%">세부 내용</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if data.global_competitors %}
+                        {% for comp in data.global_competitors %}
+                        <tr>
+                            <td><strong>{{ comp.competitor }}</strong></td>
+                            <td>{{ comp.activity_type }}</td>
+                            <td>{{ comp.details | replace('\n', '<br>') | safe }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3" class="empty-state">최근 수집된 주요 활동이 없습니다.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
+            <h2>2. 국내 주요 기관 활동 요약</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th width="25%">기관명</th>
+                        <th width="30%">활동 유형</th>
+                        <th width="45%">세부 내용</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if data.local_competitors %}
+                        {% for comp in data.local_competitors %}
+                        <tr>
+                            <td><strong>{{ comp.competitor }}</strong></td>
+                            <td>{{ comp.activity_type }}</td>
+                            <td>{{ comp.details | replace('\n', '<br>') | safe }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3" class="empty-state">최근 수집된 주요 활동이 없습니다.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
+            <h2>3. 핵심 마케팅 인사이트 및 대응 전략</h2>
+            <div class="insights">
+                <ul>
+                    {% for insight in data.insights %}
+                    <li>{{ insight }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <a href="https://www.lrqa.com/ko-kr/" class="btn">LRQA 웹사이트 방문하기</a>
+            <p style="font-size: 12px; color: #999; margin-top: 16px;">본 보고서는 자동화 시스템에 의해 생성되었습니다.</p>
+        </div>
+    </div>
+</body>
+</html>
