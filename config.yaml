@@ -5,10 +5,10 @@ crawling:
     sgs: "SGS"
     bv: "BV"
     tuvsud: "TÜV SÜD"
-    ksa: "KSA"
-    kfq: "KFQ"
-    kmar: "KMAR"
-    kpcqa: "KPCQA"
+    ksa: "한국표준협회"
+    kfq: "한국품질재단"
+    kmar: "한국경영인증원"
+    kpcqa: "한국생산성본부인증원"
 
 ai:
   model: "gpt-4o"
