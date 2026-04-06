@@ -4,11 +4,15 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import yaml
 
+import httpx
+
 class AIAnalyzer:
     def __init__(self):
         load_dotenv()
         self.api_key = os.getenv("OPENAI_API_KEY")
-        self.client = OpenAI(api_key=self.api_key)
+        # SSL 방화벽 우회를 위한 httpx 클라이언트
+        http_client = httpx.Client(verify=False)
+        self.client = OpenAI(api_key=self.api_key, http_client=http_client)
         
         with open("config.yaml", "r", encoding="utf-8") as f:
             self.config = yaml.safe_load(f)["ai"]
