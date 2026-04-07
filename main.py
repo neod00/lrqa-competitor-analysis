@@ -37,6 +37,12 @@ def main():
         template = env.get_template('email_template.html')
         html_report = template.render(data=ai_result_json)
         print("✅ HTML 생성 완료!")
+        
+        # 방화벽 이슈로 이메일 전송 실패 시에도 결과를 확인할 수 있도록 로컬 파일로 저장
+        with open("preview_report.html", "w", encoding="utf-8") as f:
+            f.write(html_report)
+        print("📂 방화벽 환경 대비 로컬 파일(preview_report.html)로도 저장 완료!")
+        
     except Exception as e:
         print(f"❌ HTML 템플릿 렌더링 중 오류 발생: {e}")
         return

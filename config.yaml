@@ -5,13 +5,20 @@ crawling:
     sgs: "SGS"
     bv: "BV"
     tuvsud: "TÜV SÜD"
+    intertek: "Intertek"
     ksa: "한국표준협회"
     kfq: "한국품질재단"
     kmar: "한국경영인증원"
     kpcqa: "한국생산성본부인증원"
+  regulations:
+    "CBAM 동향": "CBAM OR 탄소국경조정제도 OR 탄소국경세"
+    "EU ESG 동향": "CSRD OR ESG 공시 OR 지속가능성 지침"
+    "AI 보안 및 인증": "AI Act OR ISO 42001 OR 인공지능법 OR AI 경영시스템"
+    "글로벌 사이버보안": "NIS2 OR DORA OR 사이버보안"
+    "공급망 및 실사법": "CSDDD OR 공급망 실사법"
 
 ai:
-  model: "gpt-4o"
+  model: "gpt-4o-mini"
   temperature: 0.3
 
 email:
