@@ -11,7 +11,9 @@ class NewsCrawler:
     def __init__(self, days_ago=30):
         self.days_ago = days_ago
         with open("config.yaml", "r", encoding="utf-8") as f:
-            self.competitors = yaml.safe_load(f)["crawling"]["competitors"]
+            config = yaml.safe_load(f)["crawling"]
+            self.competitors = config["competitors"]
+            self.regulations = config.get("regulations", [])
 
     def fetch_latest_news(self):
         crawled_data = {}
@@ -25,53 +27,57 @@ class NewsCrawler:
 
         for key, name in self.competitors.items():
             print(f"[{name}] 구글 뉴스 크롤링 접속 중...")
-            
-            # 검색어 최적화
             query = f'"{name}" 인증 OR 세미나 OR 협약'
             url = f"https://news.google.com/rss/search?q={quote(query)}&hl=ko&gl=KR&ceid=KR:ko"
+            self._fetch_rss(url, name, headers, cutoff_date, crawled_data)
+
+        # 핵심 추가사항: 글로벌 규제 동향 크롤링 (config.yaml 활용, 유연한 OR 검색 허용)
+        for reg_name, reg_query in self.regulations.items():
+            print(f"[규제 동향: {reg_name}] 구글 뉴스 크롤링 접속 중...")
+            url = f"https://news.google.com/rss/search?q={quote(reg_query)}&hl=ko&gl=KR&ceid=KR:ko"
+            self._fetch_rss(url, f"규제: {reg_name}", headers, cutoff_date, crawled_data)
+
+        return crawled_data
+
+    def _fetch_rss(self, url, name, headers, cutoff_date, crawled_data):
+        try:
+            response = requests.get(url, headers=headers, timeout=10, verify=False)
+            if response.status_code != 200:
+                print(f"[{name}] 구글 뉴스 접속 실패 (상태 코드: {response.status_code})")
+                return
+                
+            soup = BeautifulSoup(response.content, "xml")
+            items = soup.find_all("item")
             
-            try:
-                # 위장한 header 씌워서 요청 보내기, SSL 인증 에러 우회
-                response = requests.get(url, headers=headers, timeout=10, verify=False)
-                if response.status_code != 200:
-                    print(f"[{name}] 구글 뉴스 접속 실패 (상태 코드 막힘: {response.status_code})")
+            news_list = []
+            for item in items:
+                pub_date_str = item.pubDate.text
+                try:
+                    pub_date = email.utils.parsedate_to_datetime(pub_date_str)
+                except Exception as e:
                     continue
                     
-                soup = BeautifulSoup(response.content, "xml")
-                items = soup.find_all("item")
-                
-                news_list = []
-                for item in items:
-                    pub_date_str = item.pubDate.text
-                    try:
-                        # 핵심 해결 2. 에러가 잦은 strptime 대신 강력한 이메일 표준 날짜 해석기 사용
-                        pub_date = email.utils.parsedate_to_datetime(pub_date_str)
-                    except Exception as e:
-                        print(f"날짜 파싱 건너뜀: {e}")
-                        continue
+                if pub_date >= cutoff_date:
+                    clean_title = item.title.text.replace(' - Google 검색', '')
+                    news_list.append({
+                        "title": clean_title,
+                        "date": pub_date.strftime("%Y-%m-%d"),
+                        "link": item.link.text
+                    })
+            
+            if news_list:
+                unique_news = []
+                seen_titles = set()
+                for n in news_list:
+                    if n['title'] not in seen_titles:
+                        seen_titles.add(n['title'])
+                        unique_news.append(n)
                         
-                    if pub_date >= cutoff_date:
-                        clean_title = item.title.text.replace(' - Google 검색', '')
-                        news_list.append({
-                            "title": clean_title,
-                            "date": pub_date.strftime("%Y-%m-%d"),
-                            "link": item.link.text
-                        })
+                # 2안 적용: 규제 동향은 상위 2개, 일반 경쟁사는 상위 3개로 엄격히 제한하여 AI 토큰 부담(쏠림 현상) 방지
+                limit = 2 if name.startswith("규제:") else 3
+                crawled_data[name] = unique_news[:limit] 
+            else:
+                print(f"[{name}] 기간 내 조건에 맞는 기사 없음 (총 검색 기사 수: {len(items)})")
                 
-                if news_list:
-                    # 중복 기사 필터링
-                    unique_news = []
-                    seen_titles = set()
-                    for n in news_list:
-                        if n['title'] not in seen_titles:
-                            seen_titles.add(n['title'])
-                            unique_news.append(n)
-                            
-                    crawled_data[name] = unique_news[:5] 
-                else:
-                    print(f"[{name}] 기간 내 조건에 맞는 기사 없음 (총 검색된 기사 수: {len(items)})")
-                    
-            except Exception as e:
-                print(f"[{name}] 크롤링 완전 실패: {e}")
-        
-        return crawled_data
+        except Exception as e:
+            print(f"[{name}] 크롤링 완전 실패: {e}")
