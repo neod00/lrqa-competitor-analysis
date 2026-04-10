@@ -29,6 +29,13 @@ def main():
         
     print("✅ AI 분석 완료!")
 
+    # 3. 데이터 정렬 (섹션별 날짜 기준 내림차순 최신순 정렬)
+    print("📋 리포트 날짜 기준 최신순 정렬 중...")
+    for key in ["global_competitors", "regulations", "local_competitors"]:
+        if key in ai_result_json and isinstance(ai_result_json[key], list):
+            # date 항목이 없거나 형식이 이상할 경우 가장 오래된 날짜 취급. 기호(예: 괄호)가 붙어 있을 경우 제거 후 비교
+            ai_result_json[key].sort(key=lambda x: str(x.get('date', '1970-01-01')).replace('[', '').replace(']', '').strip(), reverse=True)
+
     # 3. HTML 템플릿 렌더링
     print("🎨 Jinja2 기반 HTML 이메일 템플릿 생성 중...")
     try:
