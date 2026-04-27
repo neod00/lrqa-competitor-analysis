@@ -16,6 +16,16 @@ crawling:
     "AI 보안 및 인증": "AI Act OR ISO 42001 OR 인공지능법 OR AI 경영시스템"
     "글로벌 사이버보안": "NIS2 OR DORA OR 사이버보안"
     "공급망 및 실사법": "CSDDD OR 공급망 실사법"
+  naver_blogs:
+    dnvglbakr: "DNV 공식블로그"
+    sgsmarketing: "SGS 블로그"
+    bvkorea_blog: "뷰로베리타스 블로그"
+    tuv-sud: "TUV SUD 블로그"
+    tuv_korea: "TUV 라인란드 블로그"
+    intertek-cert: "인터텍 블로그"
+    dqskorea: "DQS Korea 블로그"
+    kfq_official: "한국품질재단 블로그"
+    kmr16949: "한국경영인증원 블로그"
 
 ai:
   model: "gpt-4o-mini"
