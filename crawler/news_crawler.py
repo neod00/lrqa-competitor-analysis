@@ -14,6 +14,7 @@ class NewsCrawler:
             config = yaml.safe_load(f)["crawling"]
             self.competitors = config["competitors"]
             self.regulations = config.get("regulations", [])
+            self.naver_blogs = config.get("naver_blogs", {})
 
     def fetch_latest_news(self):
         crawled_data = {}
@@ -36,6 +37,12 @@ class NewsCrawler:
             print(f"[규제 동향: {reg_name}] 구글 뉴스 크롤링 접속 중...")
             url = f"https://news.google.com/rss/search?q={quote(reg_query)}&hl=ko&gl=KR&ceid=KR:ko"
             self._fetch_rss(url, f"규제: {reg_name}", headers, cutoff_date, crawled_data)
+
+        # 핵심 추가사항: 네이버 블로그 RSS 크롤링
+        for blog_id, blog_name in self.naver_blogs.items():
+            print(f"[네이버 블로그: {blog_name}] 크롤링 접속 중...")
+            url = f"https://rss.blog.naver.com/{blog_id}.xml"
+            self._fetch_rss(url, blog_name, headers, cutoff_date, crawled_data)
 
         return crawled_data
 
