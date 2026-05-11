@@ -1,0 +1,6 @@
+.env
+__pycache__/
+*.py[cod]
+preview_report.html
+preview_report_banner.html
+competitor_report_*.md

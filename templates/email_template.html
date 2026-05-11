@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
         .header {
-            background-color: #0033a0; /* LRQA Blue */
+            background-color: #0033a0;
             color: #ffffff;
             padding: 20px;
             text-align: center;
@@ -97,9 +97,36 @@
             padding: 10px;
             font-style: italic;
         }
-        .threat-high { background-color: #ffebee; color: #c62828; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 11px; display: inline-block; margin-top: 4px; }
-        .threat-medium { background-color: #fff3e0; color: #ef6c00; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 11px; display: inline-block; margin-top: 4px;}
-        .threat-low { background-color: #e8f5e9; color: #2e7d32; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 11px; display: inline-block; margin-top: 4px;}
+        .threat-high {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 11px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        .threat-medium {
+            background-color: #fff3e0;
+            color: #ef6c00;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 11px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        .threat-low {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 11px;
+            display: inline-block;
+            margin-top: 4px;
+        }
         @media only screen and (max-width: 600px) {
             .container {
                 margin: 0;
@@ -116,17 +143,19 @@
         <div class="header">
             <h1>[LRQA] 경쟁사 마케팅 활동 일일 분석</h1>
         </div>
-        
+
         <div class="content">
-            <p style="font-size: 14px; color: #555;">본 보고서는 지정된 기관들의 최근 마케팅 활동 및 비즈니스 동향을 AI가 요약 분석한 결과입니다.</p>
-            
+            <p style="font-size: 14px; color: #555;">
+                본 보고서는 지정된 기관들의 최근 마케팅 활동 및 비즈니스 동향을 AI가 요약 분석한 결과입니다.
+            </p>
+
             <h2>1. 글로벌 경쟁사 주요 활동 요약</h2>
             <table>
                 <thead>
                     <tr>
                         <th width="25%">경쟁사</th>
                         <th width="30%">활동 유형</th>
-                        <th width="45%">세부 내용</th>
+                        <th width="45%">본문 내용</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -136,9 +165,9 @@
                             <td><strong>{{ comp.competitor }}</strong></td>
                             <td>
                                 {{ comp.activity_type }}
-                                {% if comp.threat_score == '높음' %}<br><span class="threat-high">위협도: 높음</span>
-                                {% elif comp.threat_score == '보통' %}<br><span class="threat-medium">위협도: 보통</span>
-                                {% elif comp.threat_score == '낮음' %}<br><span class="threat-low">위협도: 낮음</span>
+                                {% if comp.threat_score == '높음' %}<br><span class="threat-high">위협도 높음</span>
+                                {% elif comp.threat_score == '보통' %}<br><span class="threat-medium">위협도 보통</span>
+                                {% elif comp.threat_score == '낮음' %}<br><span class="threat-low">위협도 낮음</span>
                                 {% endif %}
                             </td>
                             <td>
@@ -162,8 +191,8 @@
                 <thead>
                     <tr>
                         <th width="25%">규제 키워드</th>
-                        <th width="30%">타이틀 (기사 제목)</th>
-                        <th width="45%">세부 파급력 요약</th>
+                        <th width="30%">타이틀</th>
+                        <th width="45%">본문 및 시장 영향 요약</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -173,9 +202,9 @@
                             <td><strong>{{ reg.keyword }}</strong></td>
                             <td>
                                 {{ reg.title }}
-                                {% if reg.threat_score == '높음' %}<br><span class="threat-high">위협도: 높음</span>
-                                {% elif reg.threat_score == '보통' %}<br><span class="threat-medium">위협도: 보통</span>
-                                {% elif reg.threat_score == '낮음' %}<br><span class="threat-low">위협도: 낮음</span>
+                                {% if reg.threat_score == '높음' %}<br><span class="threat-high">위협도 높음</span>
+                                {% elif reg.threat_score == '보통' %}<br><span class="threat-medium">위협도 보통</span>
+                                {% elif reg.threat_score == '낮음' %}<br><span class="threat-low">위협도 낮음</span>
                                 {% endif %}
                             </td>
                             <td>
@@ -200,7 +229,7 @@
                     <tr>
                         <th width="25%">기관명</th>
                         <th width="30%">활동 유형</th>
-                        <th width="45%">세부 내용</th>
+                        <th width="45%">본문 내용</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -210,9 +239,9 @@
                             <td><strong>{{ comp.competitor }}</strong></td>
                             <td>
                                 {{ comp.activity_type }}
-                                {% if comp.threat_score == '높음' %}<br><span class="threat-high">위협도: 높음</span>
-                                {% elif comp.threat_score == '보통' %}<br><span class="threat-medium">위협도: 보통</span>
-                                {% elif comp.threat_score == '낮음' %}<br><span class="threat-low">위협도: 낮음</span>
+                                {% if comp.threat_score == '높음' %}<br><span class="threat-high">위협도 높음</span>
+                                {% elif comp.threat_score == '보통' %}<br><span class="threat-medium">위협도 보통</span>
+                                {% elif comp.threat_score == '낮음' %}<br><span class="threat-low">위협도 낮음</span>
                                 {% endif %}
                             </td>
                             <td>
@@ -231,7 +260,7 @@
                 </tbody>
             </table>
 
-            <h2>4. 핵심 마케팅 인사이트 및 대응 전략</h2>
+            <h2>4. 마케팅 인사이트 및 대응 전략</h2>
             <div class="insights">
                 <ul>
                     {% for insight in data.insights %}
@@ -243,14 +272,9 @@
 
         <div class="footer">
             <a href="https://www.lrqa.com/ko-kr/" class="btn">LRQA 웹사이트 방문하기</a>
-
-            <div style="margin-top: 14px;">
-                <a href="https://litt.ly/open.brain" target="_blank" style="display: inline-block; font-size: 11px; color: #a0a0a0; text-decoration: none; border: 1px solid #eaeaea; padding: 4px 10px; border-radius: 12px; background-color: transparent;">
-                    ☕ 개발자에게 커피 한 잔 사주세요! ٩( ᐛ )و
-                </a>
-            </div>
-
-            <p style="font-size: 11px; color: #bbb; margin-top: 20px;">본 보고서는 자동화 시스템에 의해 생성되었습니다.</p>
+            <p style="font-size: 11px; color: #bbb; margin-top: 20px;">
+                본 보고서는 자동화 시스템에 의해 생성되었습니다.
+            </p>
         </div>
     </div>
 </body>
