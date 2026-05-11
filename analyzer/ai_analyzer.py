@@ -34,7 +34,7 @@ class AIAnalyzer:
 {{
   "global_competitors": [
     {{
-      "competitor": "경쟁사 이름 (예: TUV SUD)",
+      "competitor": "경쟁사 이름 (예: TÜV SÜD)",
       "activity_type": "활동 요약 (예: 규제 대응 / MOU / 교육 / 인증 서비스)",
       "details": "본문 내용을 2~4문장으로 요약하고 LRQA 관점의 의미를 포함",
       "date": "기사 발행일 (예: 2026-04-01)",
@@ -75,7 +75,7 @@ class AIAnalyzer:
 4. `threat_score`는 반드시 "높음", "보통", "낮음" 중 하나만 사용하세요.
 5. 단순 홍보성 글은 "낮음", 실질적인 신규 서비스/시장 진입/대형 협약은 "높음"으로 판단하세요.
 6. 글로벌 경쟁사와 국내 기관을 정확히 구분하세요.
-   - 글로벌 경쟁사: DNV, BSI, SGS, BV, Bureau Veritas, TUV SUD, TUV Rheinland, Intertek, DQS 등
+   - 글로벌 경쟁사: DNV, BSI, SGS, BV, Bureau Veritas, TÜV SÜD, TUV Rheinland, Intertek, DQS 등
    - 국내 주요 기관: 한국표준협회, 한국품질재단, 한국경영인증원, 한국생산성본부인증원 등
 7. 규제 동향은 CBAM, ESG/CSRD, AI, 사이버보안, 공급망 실사 등 주제가 고르게 나오도록 구성하세요.
 8. 해당 카테고리에 유효한 기사가 없으면 빈 배열을 반환하세요.

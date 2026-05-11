@@ -155,7 +155,7 @@
                     <tr>
                         <th width="25%">경쟁사</th>
                         <th width="30%">활동 유형</th>
-                        <th width="45%">본문 내용</th>
+                        <th width="45%">세부 내용</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -165,9 +165,9 @@
                             <td><strong>{{ comp.competitor }}</strong></td>
                             <td>
                                 {{ comp.activity_type }}
-                                {% if comp.threat_score == '높음' %}<br><span class="threat-high">위협도 높음</span>
-                                {% elif comp.threat_score == '보통' %}<br><span class="threat-medium">위협도 보통</span>
-                                {% elif comp.threat_score == '낮음' %}<br><span class="threat-low">위협도 낮음</span>
+                                {% if comp.threat_score == '높음' %}<br><span class="threat-high">위협도: 높음</span>
+                                {% elif comp.threat_score == '보통' %}<br><span class="threat-medium">위협도: 보통</span>
+                                {% elif comp.threat_score == '낮음' %}<br><span class="threat-low">위협도: 낮음</span>
                                 {% endif %}
                             </td>
                             <td>
@@ -191,8 +191,8 @@
                 <thead>
                     <tr>
                         <th width="25%">규제 키워드</th>
-                        <th width="30%">타이틀</th>
-                        <th width="45%">본문 및 시장 영향 요약</th>
+                        <th width="30%">타이틀 (기사 제목)</th>
+                        <th width="45%">세부 파급력 요약</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -202,9 +202,9 @@
                             <td><strong>{{ reg.keyword }}</strong></td>
                             <td>
                                 {{ reg.title }}
-                                {% if reg.threat_score == '높음' %}<br><span class="threat-high">위협도 높음</span>
-                                {% elif reg.threat_score == '보통' %}<br><span class="threat-medium">위협도 보통</span>
-                                {% elif reg.threat_score == '낮음' %}<br><span class="threat-low">위협도 낮음</span>
+                                {% if reg.threat_score == '높음' %}<br><span class="threat-high">위협도: 높음</span>
+                                {% elif reg.threat_score == '보통' %}<br><span class="threat-medium">위협도: 보통</span>
+                                {% elif reg.threat_score == '낮음' %}<br><span class="threat-low">위협도: 낮음</span>
                                 {% endif %}
                             </td>
                             <td>
@@ -229,7 +229,7 @@
                     <tr>
                         <th width="25%">기관명</th>
                         <th width="30%">활동 유형</th>
-                        <th width="45%">본문 내용</th>
+                        <th width="45%">세부 내용</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -239,9 +239,9 @@
                             <td><strong>{{ comp.competitor }}</strong></td>
                             <td>
                                 {{ comp.activity_type }}
-                                {% if comp.threat_score == '높음' %}<br><span class="threat-high">위협도 높음</span>
-                                {% elif comp.threat_score == '보통' %}<br><span class="threat-medium">위협도 보통</span>
-                                {% elif comp.threat_score == '낮음' %}<br><span class="threat-low">위협도 낮음</span>
+                                {% if comp.threat_score == '높음' %}<br><span class="threat-high">위협도: 높음</span>
+                                {% elif comp.threat_score == '보통' %}<br><span class="threat-medium">위협도: 보통</span>
+                                {% elif comp.threat_score == '낮음' %}<br><span class="threat-low">위협도: 낮음</span>
                                 {% endif %}
                             </td>
                             <td>
@@ -260,7 +260,7 @@
                 </tbody>
             </table>
 
-            <h2>4. 마케팅 인사이트 및 대응 전략</h2>
+            <h2>4. 핵심 마케팅 인사이트 및 대응 전략</h2>
             <div class="insights">
                 <ul>
                     {% for insight in data.insights %}
@@ -272,6 +272,13 @@
 
         <div class="footer">
             <a href="https://www.lrqa.com/ko-kr/" class="btn">LRQA 웹사이트 방문하기</a>
+
+            <div style="margin-top: 14px;">
+                <a href="https://litt.ly/open.brain" target="_blank" style="display: inline-block; font-size: 11px; color: #a0a0a0; text-decoration: none; border: 1px solid #eaeaea; padding: 4px 10px; border-radius: 12px; background-color: transparent;">
+                    ☕ 개발자에게 커피 한 잔 사주세요! ٩( ᐛ )و
+                </a>
+            </div>
+
             <p style="font-size: 11px; color: #bbb; margin-top: 20px;">
                 본 보고서는 자동화 시스템에 의해 생성되었습니다.
             </p>
